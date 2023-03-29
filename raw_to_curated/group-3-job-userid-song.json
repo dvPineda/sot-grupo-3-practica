@@ -1,0 +1,748 @@
+{
+  "jobConfig": {
+    "name": "group-3-job-userid-song",
+    "description": "",
+    "role": "arn:aws:iam::114652167878:role/AWSGlueAndS3RoleGrupo2",
+    "command": "glueetl",
+    "version": "3.0",
+    "workerType": "G.1X",
+    "numberOfWorkers": 10,
+    "maxCapacity": 10,
+    "maxRetries": 0,
+    "timeout": 2880,
+    "maxConcurrentRuns": 1,
+    "security": "none",
+    "scriptName": "group-3-job-userid-song.py",
+    "scriptLocation": "s3://aws-glue-assets-114652167878-eu-west-1/scripts/",
+    "language": "python-3",
+    "jobParameters": [],
+    "tags": [],
+    "jobMode": "DEVELOPER_MODE",
+    "createdOn": "2023-03-22T15:56:01.197Z",
+    "developerMode": true,
+    "connectionsList": [],
+    "temporaryDirectory": "s3://aws-glue-assets-114652167878-eu-west-1/temporary/",
+    "logging": true,
+    "glueHiveMetastore": true,
+    "etlAutoTuning": true,
+    "metrics": true,
+    "spark": true,
+    "bookmark": "job-bookmark-disable",
+    "sparkPath": "s3://aws-glue-assets-114652167878-eu-west-1/sparkHistoryLogs/",
+    "flexExecution": false,
+    "minFlexWorkers": null,
+    "sourceControlDetails": {
+      "Provider": "GITHUB",
+      "Repository": "sot-grupo-3-practica",
+      "Branch": "dev",
+      "Folder": "group-3-job-userid-song",
+      "LastCommitId": "73512c96d6548dc2fdaf639040336f6dd1f29e8e"
+    }
+  },
+  "dag": {
+    "node-1": {
+      "nodeId": "node-1",
+      "dataPreview": false,
+      "previewAmount": 0,
+      "inputs": [],
+      "name": "user_songs",
+      "generatedNodeName": "user_songs_node1",
+      "classification": "DataSource",
+      "type": "S3",
+      "isCatalog": false,
+      "format": "csv",
+      "paths": [
+        "s3://sot-practica-grupo-3/raw/users-data/userid-timestamp-artid-artname-traid-traname.tsv"
+      ],
+      "compressionType": null,
+      "exclusions": [],
+      "groupFiles": null,
+      "groupSize": null,
+      "recurse": true,
+      "maxBand": null,
+      "maxFilesInBand": null,
+      "additionalOptions": {
+        "boundedSize": null,
+        "boundedFiles": null,
+        "enableSamplePath": false,
+        "samplePath": "s3://sot-practica-grupo-3/raw/users-data/userid-timestamp-artid-artname-traid-traname.tsv",
+        "boundedOption": null
+      },
+      "separator": "\t",
+      "escaper": "",
+      "quoteChar": "\"",
+      "multiline": null,
+      "withHeader": false,
+      "writeHeader": null,
+      "skipFirst": null,
+      "optimizePerformance": false,
+      "outputSchemas": [
+        [
+          {
+            "key": "col0",
+            "fullPath": [
+              "col0"
+            ],
+            "type": "string",
+            "children": null
+          },
+          {
+            "key": "col1",
+            "fullPath": [
+              "col1"
+            ],
+            "type": "string",
+            "children": null
+          },
+          {
+            "key": "col2",
+            "fullPath": [
+              "col2"
+            ],
+            "type": "string",
+            "children": null
+          },
+          {
+            "key": "col3",
+            "fullPath": [
+              "col3"
+            ],
+            "type": "string",
+            "children": null
+          },
+          {
+            "key": "col4",
+            "fullPath": [
+              "col4"
+            ],
+            "type": "string",
+            "children": null
+          },
+          {
+            "key": "col5",
+            "fullPath": [
+              "col5"
+            ],
+            "type": "string",
+            "children": null
+          }
+        ]
+      ],
+      "calculatedType": "",
+      "codeGenVersion": 2
+    },
+    "node-2": {
+      "nodeId": "node-2",
+      "dataPreview": false,
+      "previewAmount": 0,
+      "inputs": [
+        "node-1"
+      ],
+      "name": "ApplyMapping",
+      "generatedNodeName": "ApplyMapping_node2",
+      "classification": "Transform",
+      "type": "ApplyMapping",
+      "mapping": [
+        {
+          "toKey": "userid",
+          "fromPath": [
+            "col0"
+          ],
+          "toType": "string",
+          "fromType": "string",
+          "dropped": false,
+          "children": null
+        },
+        {
+          "toKey": "timestamp",
+          "fromPath": [
+            "col1"
+          ],
+          "toType": "timestamp",
+          "fromType": "string",
+          "dropped": false,
+          "children": null
+        },
+        {
+          "toKey": "artid",
+          "fromPath": [
+            "col2"
+          ],
+          "toType": "string",
+          "fromType": "string",
+          "dropped": false,
+          "children": null
+        },
+        {
+          "toKey": "artname",
+          "fromPath": [
+            "col3"
+          ],
+          "toType": "string",
+          "fromType": "string",
+          "dropped": false,
+          "children": null
+        },
+        {
+          "toKey": "traid",
+          "fromPath": [
+            "col4"
+          ],
+          "toType": "string",
+          "fromType": "string",
+          "dropped": false,
+          "children": null
+        },
+        {
+          "toKey": "traname",
+          "fromPath": [
+            "col5"
+          ],
+          "toType": "string",
+          "fromType": "string",
+          "dropped": false,
+          "children": null
+        }
+      ],
+      "parentsValid": true,
+      "calculatedType": "",
+      "codeGenVersion": 2
+    },
+    "node-3": {
+      "nodeId": "node-3",
+      "dataPreview": false,
+      "previewAmount": 0,
+      "inputs": [
+        "node-2"
+      ],
+      "name": "user_songs",
+      "generatedNodeName": "user_songs_node3",
+      "classification": "DataSink",
+      "type": "S3",
+      "streamingBatchInterval": 100,
+      "format": "glueparquet",
+      "compression": "snappy",
+      "path": "s3://sot-practica-grupo-3/curated/",
+      "partitionKeys": [],
+      "schemaChangePolicy": {
+        "enableUpdateCatalog": false,
+        "updateBehavior": null,
+        "database": null,
+        "table": null
+      },
+      "updateCatalogOptions": "none",
+      "calculatedType": "",
+      "codeGenVersion": 2
+    },
+    "node-1679559311448": {
+      "nodeId": "node-1679559311448",
+      "dataPreview": false,
+      "previewAmount": 0,
+      "inputs": [
+        "node-1679559201916"
+      ],
+      "name": "horoscopo",
+      "generatedNodeName": "horoscopo_node1679559311448",
+      "classification": "DataSink",
+      "type": "S3",
+      "streamingBatchInterval": 100,
+      "format": "glueparquet",
+      "compression": "snappy",
+      "path": "s3://sot-practica-grupo-3/curated/",
+      "partitionKeys": [],
+      "schemaChangePolicy": {
+        "enableUpdateCatalog": false,
+        "updateBehavior": null,
+        "database": null,
+        "table": null
+      },
+      "updateCatalogOptions": "none",
+      "calculatedType": "",
+      "codeGenVersion": 2
+    },
+    "node-1679559869141": {
+      "nodeId": "node-1679559869141",
+      "dataPreview": false,
+      "previewAmount": 0,
+      "inputs": [],
+      "name": "user_id_profile",
+      "generatedNodeName": "user_id_profile_node1679559869141",
+      "classification": "DataSource",
+      "type": "S3",
+      "isCatalog": false,
+      "format": "csv",
+      "paths": [
+        "s3://sot-practica-grupo-3/raw/users-data/userid-profile.tsv"
+      ],
+      "compressionType": null,
+      "exclusions": [],
+      "groupFiles": null,
+      "groupSize": null,
+      "recurse": null,
+      "maxBand": null,
+      "maxFilesInBand": null,
+      "additionalOptions": {
+        "boundedSize": null,
+        "boundedFiles": null,
+        "enableSamplePath": false,
+        "samplePath": "s3://sot-practica-grupo-3/raw/users-data/userid-profile.tsv",
+        "boundedOption": null
+      },
+      "separator": "\t",
+      "escaper": " ",
+      "quoteChar": "\"",
+      "multiline": false,
+      "withHeader": false,
+      "writeHeader": null,
+      "skipFirst": null,
+      "optimizePerformance": false,
+      "outputSchemas": [
+        [
+          {
+            "key": "#id",
+            "fullPath": [
+              "#id"
+            ],
+            "type": "string",
+            "children": null
+          },
+          {
+            "key": "gender",
+            "fullPath": [
+              "gender"
+            ],
+            "type": "string",
+            "children": null
+          },
+          {
+            "key": "age",
+            "fullPath": [
+              "age"
+            ],
+            "type": "smallint",
+            "children": null
+          },
+          {
+            "key": "country",
+            "fullPath": [
+              "country"
+            ],
+            "type": "string",
+            "children": null
+          },
+          {
+            "key": "registered",
+            "fullPath": [
+              "registered"
+            ],
+            "type": "string",
+            "children": null
+          }
+        ]
+      ],
+      "calculatedType": "",
+      "codeGenVersion": 2
+    },
+    "node-1679559201916": {
+      "nodeId": "node-1679559201916",
+      "dataPreview": false,
+      "previewAmount": 0,
+      "inputs": [],
+      "name": "Horoscopo",
+      "generatedNodeName": "Horoscopo_node1679559201916",
+      "classification": "DataSource",
+      "type": "S3",
+      "isCatalog": false,
+      "format": "csv",
+      "paths": [
+        "s3://sot-practica-grupo-3/raw/horoscope.csv"
+      ],
+      "compressionType": null,
+      "exclusions": [],
+      "groupFiles": null,
+      "groupSize": null,
+      "recurse": true,
+      "maxBand": null,
+      "maxFilesInBand": null,
+      "additionalOptions": {
+        "boundedSize": null,
+        "boundedFiles": null,
+        "enableSamplePath": false,
+        "samplePath": "s3://sot-practica-grupo-3/raw/horoscope.csv",
+        "boundedOption": null
+      },
+      "separator": ",",
+      "escaper": "",
+      "quoteChar": "\"",
+      "multiline": null,
+      "withHeader": true,
+      "writeHeader": null,
+      "skipFirst": null,
+      "optimizePerformance": false,
+      "outputSchemas": [
+        [
+          {
+            "key": "date_range",
+            "fullPath": [
+              "date_range"
+            ],
+            "type": "timestamp",
+            "children": null
+          },
+          {
+            "key": "current_date",
+            "fullPath": [
+              "current_date"
+            ],
+            "type": "timestamp",
+            "children": null
+          },
+          {
+            "key": "description",
+            "fullPath": [
+              "description"
+            ],
+            "type": "string",
+            "children": null
+          },
+          {
+            "key": "compatibility",
+            "fullPath": [
+              "compatibility"
+            ],
+            "type": "string",
+            "children": null
+          },
+          {
+            "key": "mood",
+            "fullPath": [
+              "mood"
+            ],
+            "type": "string",
+            "children": null
+          },
+          {
+            "key": "color",
+            "fullPath": [
+              "color"
+            ],
+            "type": "string",
+            "children": null
+          },
+          {
+            "key": "lucky_number",
+            "fullPath": [
+              "lucky_number"
+            ],
+            "type": "string",
+            "children": null
+          },
+          {
+            "key": "lucky_time",
+            "fullPath": [
+              "lucky_time"
+            ],
+            "type": "string",
+            "children": null
+          },
+          {
+            "key": "sign",
+            "fullPath": [
+              "sign"
+            ],
+            "type": "string",
+            "children": null
+          }
+        ]
+      ],
+      "calculatedType": "",
+      "codeGenVersion": 2
+    },
+    "node-1679560634984": {
+      "nodeId": "node-1679560634984",
+      "dataPreview": false,
+      "previewAmount": 0,
+      "inputs": [
+        "node-1679560616186"
+      ],
+      "name": "continen",
+      "generatedNodeName": "continen_node1679560634984",
+      "classification": "DataSink",
+      "type": "S3",
+      "streamingBatchInterval": 100,
+      "format": "glueparquet",
+      "compression": "snappy",
+      "path": "s3://sot-practica-grupo-3/curated/",
+      "partitionKeys": [],
+      "schemaChangePolicy": {
+        "enableUpdateCatalog": false,
+        "updateBehavior": null,
+        "database": null,
+        "table": null
+      },
+      "updateCatalogOptions": "none",
+      "calculatedType": "",
+      "codeGenVersion": 2
+    },
+    "node-1679560080098": {
+      "nodeId": "node-1679560080098",
+      "dataPreview": false,
+      "previewAmount": 0,
+      "inputs": [
+        "node-1679559711995"
+      ],
+      "name": "Split Dataset By Fields",
+      "generatedNodeName": "SplitDatasetByFields_node1679560080098",
+      "classification": "Transform",
+      "type": "SplitFields",
+      "paths": [
+        "name"
+      ],
+      "parentsValid": true,
+      "calculatedType": "",
+      "codeGenVersion": 2
+    },
+    "node-1679559760255": {
+      "nodeId": "node-1679559760255",
+      "dataPreview": false,
+      "previewAmount": 0,
+      "inputs": [
+        "node-1679560546466"
+      ],
+      "name": "country",
+      "generatedNodeName": "country_node1679559760255",
+      "classification": "DataSink",
+      "type": "S3",
+      "streamingBatchInterval": 100,
+      "format": "glueparquet",
+      "compression": "snappy",
+      "path": "s3://sot-practica-grupo-3/curated/",
+      "partitionKeys": [],
+      "schemaChangePolicy": {
+        "enableUpdateCatalog": false,
+        "updateBehavior": null,
+        "database": null,
+        "table": null
+      },
+      "updateCatalogOptions": "none",
+      "calculatedType": "",
+      "codeGenVersion": 2
+    },
+    "node-1679559621106": {
+      "nodeId": "node-1679559621106",
+      "dataPreview": false,
+      "previewAmount": 0,
+      "inputs": [],
+      "name": "continen-country",
+      "generatedNodeName": "continencountry_node1679559621106",
+      "classification": "DataSource",
+      "type": "S3",
+      "isCatalog": false,
+      "format": "csv",
+      "paths": [
+        "s3://sot-practica-grupo-3/raw/continen-country.csv"
+      ],
+      "compressionType": null,
+      "exclusions": [],
+      "groupFiles": null,
+      "groupSize": null,
+      "recurse": true,
+      "maxBand": null,
+      "maxFilesInBand": null,
+      "additionalOptions": {
+        "boundedSize": null,
+        "boundedFiles": null,
+        "enableSamplePath": false,
+        "samplePath": "s3://sot-practica-grupo-3/raw/continen-country.csv",
+        "boundedOption": null
+      },
+      "separator": ",",
+      "escaper": "",
+      "quoteChar": "\"",
+      "multiline": null,
+      "withHeader": true,
+      "writeHeader": null,
+      "skipFirst": null,
+      "optimizePerformance": false,
+      "outputSchemas": [
+        [
+          {
+            "key": "name",
+            "fullPath": [
+              "name"
+            ],
+            "type": "string",
+            "children": null
+          },
+          {
+            "key": "alpha-2",
+            "fullPath": [
+              "alpha-2"
+            ],
+            "type": "string",
+            "children": null
+          },
+          {
+            "key": "alpha-3",
+            "fullPath": [
+              "alpha-3"
+            ],
+            "type": "string",
+            "children": null
+          },
+          {
+            "key": "country-code",
+            "fullPath": [
+              "country-code"
+            ],
+            "type": "string",
+            "children": null
+          },
+          {
+            "key": "iso_3166-2",
+            "fullPath": [
+              "iso_3166-2"
+            ],
+            "type": "string",
+            "children": null
+          },
+          {
+            "key": "region",
+            "fullPath": [
+              "region"
+            ],
+            "type": "string",
+            "children": null
+          },
+          {
+            "key": "sub-region",
+            "fullPath": [
+              "sub-region"
+            ],
+            "type": "string",
+            "children": null
+          },
+          {
+            "key": "intermediate-region",
+            "fullPath": [
+              "intermediate-region"
+            ],
+            "type": "string",
+            "children": null
+          },
+          {
+            "key": "region-code",
+            "fullPath": [
+              "region-code"
+            ],
+            "type": "string",
+            "children": null
+          },
+          {
+            "key": "sub-region-code",
+            "fullPath": [
+              "sub-region-code"
+            ],
+            "type": "string",
+            "children": null
+          },
+          {
+            "key": "intermediate-region-code",
+            "fullPath": [
+              "intermediate-region-code"
+            ],
+            "type": "string",
+            "children": null
+          }
+        ]
+      ],
+      "calculatedType": "",
+      "codeGenVersion": 2
+    },
+    "node-1679561549282": {
+      "nodeId": "node-1679561549282",
+      "dataPreview": false,
+      "previewAmount": 0,
+      "inputs": [
+        "node-1679559869141"
+      ],
+      "name": "user_id_profile",
+      "generatedNodeName": "user_id_profile_node1679561549282",
+      "classification": "DataSink",
+      "type": "S3",
+      "streamingBatchInterval": 100,
+      "format": "glueparquet",
+      "compression": "snappy",
+      "path": "s3://sot-practica-grupo-3/curated/",
+      "partitionKeys": [],
+      "schemaChangePolicy": {
+        "enableUpdateCatalog": false,
+        "updateBehavior": null,
+        "database": null,
+        "table": null
+      },
+      "updateCatalogOptions": "none",
+      "calculatedType": "",
+      "codeGenVersion": 2
+    },
+    "node-1679559711995": {
+      "nodeId": "node-1679559711995",
+      "dataPreview": false,
+      "previewAmount": 0,
+      "inputs": [
+        "node-1679559621106"
+      ],
+      "name": "Drop Fields",
+      "generatedNodeName": "DropFields_node1679559711995",
+      "classification": "Transform",
+      "type": "DropFields",
+      "paths": [
+        "alpha-2",
+        "alpha-3",
+        "country-code",
+        "iso_3166-2",
+        "intermediate-region",
+        "region-code",
+        "sub-region-code",
+        "intermediate-region-code"
+      ],
+      "parentsValid": true,
+      "calculatedType": "",
+      "codeGenVersion": 2
+    },
+    "node-1679560616186": {
+      "nodeId": "node-1679560616186",
+      "dataPreview": false,
+      "previewAmount": 0,
+      "inputs": [
+        "node-1679560080098"
+      ],
+      "name": "Select From Collection",
+      "generatedNodeName": "SelectFromCollection_node1679560616186",
+      "classification": "Transform",
+      "type": "SelectFromCollection",
+      "index": 1,
+      "parentsValid": true,
+      "calculatedType": "",
+      "codeGenVersion": 2
+    },
+    "node-1679560546466": {
+      "nodeId": "node-1679560546466",
+      "dataPreview": false,
+      "previewAmount": 0,
+      "inputs": [
+        "node-1679560080098"
+      ],
+      "name": "Select From Collection",
+      "generatedNodeName": "SelectFromCollection_node1679560546466",
+      "classification": "Transform",
+      "type": "SelectFromCollection",
+      "index": 0,
+      "parentsValid": true,
+      "calculatedType": "",
+      "codeGenVersion": 2
+    }
+  },
+  "hasBeenSaved": false,
+  "script": "import sys\r\nfrom awsglue.transforms import *\r\nfrom awsglue.utils import getResolvedOptions\r\nfrom pyspark.context import SparkContext\r\nfrom awsglue.context import GlueContext\r\nfrom awsglue.job import Job\r\nfrom pyspark.sql.functions import to_date\r\nfrom pyspark.sql.functions import regexp_replace, initcap\r\nfrom pyspark.sql.functions import col, isnan, when\r\nargs = getResolvedOptions(sys.argv, [\"JOB_NAME\"])\r\nsc = SparkContext()\r\nglueContext = GlueContext(sc)\r\nspark = glueContext.spark_session\r\njob = Job(glueContext)\r\njob.init(args[\"JOB_NAME\"], args)\r\n\r\n# Script generated for node user_songs\r\nuser_songs_node1 = glueContext.create_dynamic_frame.from_options(\r\n    format_options={\r\n        \"quoteChar\": '\"',\r\n        \"withHeader\": False,\r\n        \"separator\": \"\\t\",\r\n        \"optimizePerformance\": False,\r\n    },\r\n    connection_type=\"s3\",\r\n    format=\"csv\",\r\n    connection_options={\r\n        \"paths\": [\r\n            \"s3://sot-practica-grupo-3/raw/users-data/userid-timestamp-artid-artname-traid-traname.tsv\"\r\n        ],\r\n        \"recurse\": True,\r\n    },\r\n    transformation_ctx=\"user_songs_node1\",\r\n)\r\n\r\n# Script generated for node user_id_profile\r\nuser_id_profile_node1679559869141 = glueContext.create_dynamic_frame.from_options(\r\n    format_options={\r\n        \"quoteChar\": '\"',\r\n        \"withHeader\": True,\r\n        \"separator\": \",\",\r\n        \"multiline\": False,\r\n        \"optimizePerformance\": False,\r\n    },\r\n    connection_type=\"s3\",\r\n    format=\"csv\",\r\n    connection_options={\r\n        \"paths\": [\"s3://sot-practica-grupo-3/raw/users-data/userid-profile.csv\"]\r\n    },\r\n    transformation_ctx=\"user_id_profile_node1679559869141\",\r\n)\r\n\r\nuser_id_profile_node1679559869141 = user_id_profile_node1679559869141.withColumn(\"country\", when(col(\"country\").isNull(), \"not_country\").otherwise(col(\"country\")))\r\nuser_id_profile_node1679559869141 = user_id_profile_node1679559869141.withColumn(\"registered\",\r\n                                                                           to_date(user_id_profile_node1679559869141[\"registered\"],'M/d/yyyy'))\r\n\r\n# Script generated for node Horoscopo\r\nS3bucket_node1 = glueContext.create_dynamic_frame.from_options(\r\n    format_options={\r\n        \"quoteChar\": '\"',\r\n        \"withHeader\": True,\r\n        \"separator\": \",\",\r\n        \"optimizePerformance\": False,\r\n    },\r\n    connection_type=\"s3\",\r\n    format=\"csv\",\r\n    connection_options={\r\n        \"paths\": [\"s3://sot-practica-grupo-3/raw/horoscope.csv\"],\r\n        \"recurse\": True,\r\n    },\r\n    transformation_ctx=\"S3bucket_node1\",\r\n)\r\n\r\n# Script generated for node continen-country\r\ncontinencountry_node1679559621106 = glueContext.create_dynamic_frame.from_options(\r\n    format_options={\r\n        \"quoteChar\": '\"',\r\n        \"withHeader\": True,\r\n        \"separator\": \",\",\r\n        \"optimizePerformance\": False,\r\n    },\r\n    connection_type=\"s3\",\r\n    format=\"csv\",\r\n    connection_options={\r\n        \"paths\": [\"s3://sot-practica-grupo-3/raw/countryContinent.csv\"],\r\n        \"recurse\": True,\r\n    },\r\n    transformation_ctx=\"continencountry_node1679559621106\",\r\n)\r\n\r\n# Script generated for node ApplyMapping\r\nApplyMapping_node2 = ApplyMapping.apply(\r\n    frame=user_songs_node1,\r\n    mappings=[\r\n        (\"col0\", \"string\", \"userid\", \"string\"),\r\n        (\"col1\", \"string\", \"timestamp\", \"timestamp\"),\r\n        (\"col2\", \"string\", \"artid\", \"string\"),\r\n        (\"col3\", \"string\", \"artname\", \"string\"),\r\n        (\"col4\", \"string\", \"traid\", \"string\"),\r\n        (\"col5\", \"string\", \"traname\", \"string\"),\r\n    ],\r\n    transformation_ctx=\"ApplyMapping_node2\",\r\n)\r\n# Script generated for node Drop Fields\r\nDropFields_node1679559711995 = DropFields.apply(\r\n    frame=continencountry_node1679559621106,\r\n    paths=[\r\n        \"code_2\",\r\n        \"country-code\",\r\n        \"iso_3166_2\",\r\n        \"region_code\",\r\n        \"sub_region_code\"\r\n    ],\r\n    transformation_ctx=\"DropFields_node1679559711995\",\r\n)\r\n\r\n\r\n\r\nuser_id_profile_node1679559869141.toDF().write.format(\"parquet\").mode(\"overwrite\").save(\"s3://sot-practica-grupo-3/curated/user_id_profile\")\r\nS3bucket_node1.toDF().write.format(\"parquet\").mode(\"overwrite\").save(\"s3://sot-practica-grupo-3/curated/horoscopo\")\r\nApplyMapping_node2.toDF().write.format(\"parquet\").mode(\"overwrite\").save(\"s3://sot-practica-grupo-3/curated/user_songs\")\r\nDropFields_node1679559711995.toDF().write.format(\"parquet\").mode(\"overwrite\").save(\"s3://sot-practica-grupo-3/curated/continentCountry\")\r\n\r\n\r\njob.commit()\r\n"
+}
